@@ -5,9 +5,9 @@ export function fetchLoggedInUserOrders(id) {
 }
 
 export function fetchLoggedInUser(id) {
-  return axios.get(`http://localhost:8080/user=${id}`);
+  return axios.get(`http://localhost:8080/users/${id}`);
 }
 
 export async function updateUser(update) {
-  return axios.patch(`http://localhost:8080/user/${update.id}`, update);
+  return axios.patch(`http://localhost:8080/users/${update.id}`, update);
 }

@@ -39,11 +39,7 @@ export const updateUserAsync = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    resetOrder: (state) => {
-      state.currentOrder = null;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder

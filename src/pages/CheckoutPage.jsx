@@ -6,15 +6,13 @@ import {
 } from "../features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/auth/authSlice";
 import { useState } from "react";
 import {
   createOrdersAsync,
   selectCurrentOrder,
 } from "../features/orders/orderSlice";
+import { selectUserInfo } from "../features/user/userSlice";
 
 const CheckoutPage = () => {
   const [selectedAddress, setselectedAddress] = useState(null);
@@ -23,9 +21,9 @@ const CheckoutPage = () => {
   // -----------------------
   const dispatch = useDispatch();
   let items = useSelector(selectItems);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
-
+  console.log(user);
   // -----------------------
   const {
     register,
@@ -82,7 +80,6 @@ const CheckoutPage = () => {
             <form
               noValidate
               onSubmit={handleSubmit((data) => {
-                console.log(data);
                 dispatch(
                   updateUserAsync({
                     ...user,
@@ -268,7 +265,7 @@ const CheckoutPage = () => {
                     Choose form existing address
                   </p>
                   <ul role="list">
-                    {user.addresses.map((address, i) => (
+                    {user?.addresses.map((address, i) => (
                       <li
                         key={i}
                         className="flex  px-2 my-2 justify-between gap-x-6 py-5 border-solid border-2 border-gray-300 rounded-md"

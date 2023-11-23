@@ -10,10 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import { useEffect } from "react";
 import PageNotFound from "./pages/PageNotFound";
-import OrderSuccess from "./pages/OrderSuccess";
 import { UserOrderPage } from "./pages/UserOrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import { fetchLoggedInUserAsync, selectUserInfo } from "./features/user/userSlice";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
+import OrderSuccess from "./pages/orderSuccess";
+import { selectLoggedInUser } from "./features/auth/authSlice";
 
 const routes = createBrowserRouter([
   {
@@ -76,7 +77,8 @@ const routes = createBrowserRouter([
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
+  const user = useSelector(selectLoggedInUser);
+
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsByUserIdAsync(user.id));
