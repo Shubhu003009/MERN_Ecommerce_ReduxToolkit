@@ -38,6 +38,7 @@ const AuthSignup = () => {
                   email: data.email,
                   password: data.password,
                   addresses: [],
+                  role: "user",
                 })
               );
             })}

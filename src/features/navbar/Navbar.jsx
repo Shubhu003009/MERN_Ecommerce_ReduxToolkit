@@ -8,12 +8,23 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../cart/cartSlice";
+import { selectLoggedInUser } from "../auth/authSlice";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Home", to: "#!", current: true, user: true },
+  { name: "Shop", to: "#!", current: true, user: true },
+  { name: "Products", to: "#!", current: true, user: true },
+  { name: "Dashboard", to: "#!", current: true, admin: true },
+  { name: "Team", to: "#!", current: true, admin: true },
+  { name: "Admin", to: "/admin", current: true, admin: true },
+];
+const userNavigation = [
+  { name: "Home", to: "#!", current: true, user: true },
+  { name: "Shop", to: "#!", current: true, user: true },
+  { name: "Products", to: "#!", current: true, user: true },
+  { name: "Dashboard", to: "#!", current: true, admin: true },
+  { name: "Team", to: "#!", current: true, admin: true },
+  { name: "Admin", to: "/admin", current: true, admin: true },
 ];
 
 function classNames(...classes) {
@@ -22,7 +33,8 @@ function classNames(...classes) {
 
 function Navbar() {
   const items = useSelector(selectItems);
-  return ( 
+  const user = useSelector(selectLoggedInUser);
+  return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
@@ -46,21 +58,23 @@ function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    {navigation.map((item) =>
+                      item[user.role] ? (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
+                      ) : null
+                    )}
                   </div>
                 </div>
               </div>
@@ -108,7 +122,7 @@ function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to='/profile'
+                            to="/profile"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -134,7 +148,7 @@ function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/login"
+                            to="/logout"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

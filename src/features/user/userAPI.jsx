@@ -9,5 +9,7 @@ export function fetchLoggedInUser(id) {
 }
 
 export async function updateUser(update) {
-  return axios.patch(`http://localhost:8080/users/${update.id}`, update);
+  return axios.patch(`http://localhost:8080/users/${update.id}`, update, {
+    headers: { "Content-Type": "application/json" },
+  });
 }

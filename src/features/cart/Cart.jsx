@@ -8,6 +8,7 @@ import {
 } from "./cartSlice";
 
 const Cart = () => {
+  console.log('cart re-renders');
   const dispatch = useDispatch();
   let items = useSelector(selectItems);
 

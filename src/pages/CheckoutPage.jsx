@@ -20,10 +20,10 @@ const CheckoutPage = () => {
 
   // -----------------------
   const dispatch = useDispatch();
-  let items = useSelector(selectItems);
+  const items = useSelector(selectItems);
   const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
-  console.log(user);
+  console.log('user: CheckoutPage',user);
   // -----------------------
   const {
     register,

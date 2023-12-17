@@ -80,7 +80,7 @@ const UserOrders = () => {
             <div className="flex  px-2 my-2 justify-between gap-x-6 py-5 border-solid border-2 border-gray-300 rounded-md">
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">
-                  {order.selectedAddress.fullName}
+                <span className="text-lg font-bold">{order.selectedAddress.fullName}</span>
                 </p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">
                   <strong>Phone:</strong> {order.selectedAddress.phone}

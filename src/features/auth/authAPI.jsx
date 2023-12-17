@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import axios from "axios";
 
 export async function createUser(userData) {
@@ -22,8 +23,11 @@ export function checkUser(loginInfo) {
   });
 }
 
-
-
+export function signOut(id) {
+  return new Promise(async (resolve) => {
+    resolve({ data: "sign out sucessfuly" });
+  });
+}
 
 // export async function checkUser(loginInfo) {
 //   const email = loginInfo.email;
