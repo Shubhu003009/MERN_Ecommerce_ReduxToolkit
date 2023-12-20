@@ -21,6 +21,7 @@ import AdminProtected from "./features/auth/Components/AdminProtected";
 import AdminProductsListPage from "./pages/AdminProductsListPage";
 import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
 
 const routes = createBrowserRouter([
   {
@@ -52,6 +53,22 @@ const routes = createBrowserRouter([
     element: (
       <AdminProtected>
         <AdminProductFormPage />
+      </AdminProtected>
+    ),
+  },
+  {
+    path: "admin/productForm/edit/:id",
+    element: (
+      <AdminProtected>
+        <AdminProductFormPage />
+      </AdminProtected>
+    ),
+  },
+  {
+    path: "admin/orders",
+    element: (
+      <AdminProtected>
+        <AdminOrdersPage />
       </AdminProtected>
     ),
   },

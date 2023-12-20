@@ -1,23 +1,23 @@
-import axios from "axios";
+import instance from "../../app/config";
 
 export function fetchItems() {
-  return axios.get("http://localhost:8080/cart");
+  return instance.get("/cart");
 }
 
 export function addToCart(item) {
-  return axios.post("http://localhost:8080/cart", item);
+  return instance.post("/cart", item);
 }
 
 export function fetchItemsByUserId(userId) {
-  return axios.get(`http://localhost:8080/cart?user=${userId}`);
+  return instance.get(`/cart?user=${userId}`);
 }
 
 export function updateItem(id, itemUpdate) {
-  return axios.patch(`http://localhost:8080/cart/${id}`, itemUpdate);
+  return instance.patch(`/cart/${id}`, itemUpdate);
 }
 
 export function deleteItem(id) {
-  return axios.delete(`http://localhost:8080/cart/${id}`);
+  return instance.delete(`/cart/${id}`);
 }
 
 export async function resetCart(id) {
@@ -25,4 +25,4 @@ export async function resetCart(id) {
   for (let item of data) {
     await deleteItem(item.id);
   }
-} 
+}

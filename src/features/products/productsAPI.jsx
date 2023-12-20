@@ -1,7 +1,7 @@
-import axios from "axios";
+import instance from "../../app/config";
 
 export function fetchAllProducts() {
-  return axios.get("http://localhost:8080/products");
+  return instance.get("/products");
 }
 
 export async function fetchProductsFilter(filter, sort, pagination) {
@@ -23,20 +23,28 @@ export async function fetchProductsFilter(filter, sort, pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
 
-  let res = axios.get(`http://localhost:8080/products?${queryString}`);
-  let data = (await res).data
+  let res = instance.get(`/products?${queryString}`);
+  let data = (await res).data;
   let totalItems = (await res).headers.get("X-total-Count");
   return { data: { products: data, totalItems: +totalItems } };
 }
 
 export function fetchAllCategories() {
-  return axios.get("http://localhost:8080/categories");
+  return instance.get("/categories");
 }
 
 export function fetchAllBrands() {
-  return axios.get("http://localhost:8080/brands");
+  return instance.get("/brands");
 }
 
 export function fetchProductById(id) {
-  return axios.get(`http://localhost:8080/products/${id}`);
+  return instance.get(`/products/${id}`);
+}
+
+export function createProduct(product) {
+  return instance.post(`/products`, product);
+}
+
+export function updateProduct(itemUpdate) {
+  return instance.patch(`/products/${itemUpdate.id}`, itemUpdate);
 }

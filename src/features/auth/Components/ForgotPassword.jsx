@@ -6,7 +6,6 @@ const ForgotPassword = () => {
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { errors },
   } = useForm();
 

@@ -1,5 +1,6 @@
-import axios from "axios";
+import instance from "../../app/config";
+
 
 export function createOrder(order) {
-  return axios.post("http://localhost:8080/orders", order);
+  return instance.post("/orders", order);
 }

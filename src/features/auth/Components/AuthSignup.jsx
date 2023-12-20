@@ -9,7 +9,6 @@ const AuthSignup = () => {
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { errors },
   } = useForm();
   const user = useSelector(selectLoggedInUser);

@@ -1,8 +1,7 @@
-/* eslint-disable no-async-promise-executor */
-import axios from "axios";
+import instance from "../../app/config";
 
 export async function createUser(userData) {
-  return axios.post("http://localhost:8080/users", userData);
+  return instance.post("/users", userData);
 }
 
 export function checkUser(loginInfo) {
@@ -32,7 +31,7 @@ export function signOut(id) {
 // export async function checkUser(loginInfo) {
 //   const email = loginInfo.email;
 //   const password = loginInfo.password;
-//   let res = axios.post(
+//   let res = instance.post(
 //     `http://localhost:8080/users?email=${email}`
 //   );
 //   console.log(res);

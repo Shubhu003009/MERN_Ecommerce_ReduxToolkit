@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useEffect, Fragment, useState } from "react";
-import "./Products.css";
 import {
   fetchAllCategoriesAsync,
   fetchBrandsAsync,
@@ -533,12 +532,24 @@ function ProductGrid({ products }) {
                         </p>
                       </div>
                     </div>
+
+                    {/* DELETED FLAG */}
+                    {product.deleted && (
+                      <div>
+                        <p className="text-sm font-semibold text-red-500">
+                          product deleted
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </Link>
-                <div>
-                  <button className="rounded-md my-4 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <div className="mt-4">
+                  <Link
+                    to={`/admin/productForm/edit/${product.id}`}
+                    className="rounded-md my-4 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
                     Edit Product
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
