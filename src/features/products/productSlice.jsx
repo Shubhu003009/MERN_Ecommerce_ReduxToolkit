@@ -150,8 +150,9 @@ export const productsSlice = createSlice({
         const index = state.products.findIndex(
           (product) => product.id === action.payload.id
         );
-        state.products[index] = action.payload;
-        // state.products.splice(index, 1, action.payload);
+        // state.products[index] = action.payload; // new method to splice
+        state.products.splice(index, 1, action.payload);
+        state.selectedProduct = action.payload;
       });
   },
 });
@@ -163,5 +164,6 @@ export const selectAllProducts = (state) => state.product.products;
 export const selectTotalItems = (state) => state.product.totalItems;
 export const selectCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
+export const selectProductsListStatus = (state) => state.product.status;
 
 export default productsSlice.reducer;

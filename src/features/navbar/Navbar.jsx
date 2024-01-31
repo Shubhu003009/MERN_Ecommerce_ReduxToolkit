@@ -1,31 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../cart/cartSlice";
 import { selectLoggedInUser } from "../auth/authSlice";
+import Footer from "../common/Footer";
+import ScrollToTop from "../../utility/ScrollToTop";
 
 const navigation = [
-  { name: "Home", to: "#!", current: true, user: true },
-  { name: "Shop", to: "#!", current: true, user: true },
-  { name: "Products", to: "#!", current: true, user: true },
-  { name: "Dashboard", to: "#!", current: true, admin: true },
-  { name: "Team", to: "#!", current: true, admin: true },
-  { name: "Admin", to: "/admin", current: true, admin: true },
+  { name: "Products", to: "/admin", current: true, admin: true },
   { name: "Orders", to: "/admin/orders", current: true, admin: true },
-];
-const userNavigation = [
-  { name: "Home", to: "#!", current: true, user: true },
-  { name: "Shop", to: "#!", current: true, user: true },
-  { name: "Products", to: "#!", current: true, user: true },
-  { name: "Dashboard", to: "#!", current: true, admin: true },
-  { name: "Team", to: "#!", current: true, admin: true },
-  { name: "Admin", to: "/admin", current: true, admin: true },
 ];
 
 function classNames(...classes) {
@@ -35,8 +24,11 @@ function classNames(...classes) {
 function Navbar() {
   const items = useSelector(selectItems);
   const user = useSelector(selectLoggedInUser);
+
+  ScrollToTop();
+
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-black sticky top-0 left-0 z-50 ">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

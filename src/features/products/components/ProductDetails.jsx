@@ -5,42 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductByIdAsync,
   selectProductById,
+  selectProductsListStatus,
   selectTotalItems,
   //   selectProductListStatus,
 } from "../productSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../../cart/cartSlice";
+import { addToCartAsync, selectItems } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
-// import { addToCartAsync, selectItems } from "../../cart/cartSlice";
-// import { selectLoggedInUser } from "../../auth/authSlice";
-// import { useAlert } from "react-alert";
-// import { Grid } from "react-loader-spinner";
-
-// const product = {
-//   name: "Basic Tee 6pacl",
-//   price: "43",
-//   href: "#",
-//   breadcrumbs: [
-//     { id: 1, name: "men", href: "#" },
-//     { id: 2, name: "Clothing", href: "#" },
-//   ],
-//   images: [
-//     { src: "", alt: "tow" },
-//     { src: "", alt: "tow" },
-//     { src: "", alt: "tow" },
-//     { src: "", alt: "tow" },
-//     { src: "", alt: "tow" },
-//   ],
-//
-//   description: "teadiahwidj awpdjpawdjp wapdj pwajdpojawopd jopawj",
-//   highlights: [
-//     "dwado wda opa opwd oawdop",
-//     "dwado wda op daw ad   awdopwd oawdop",
-//     "ddwa dw awdado wda opa opwd oawdop",
-//     "dwado wda opa opwd oawdo dwa ddwadwaddwadawdp",
-//   ],
-//   details: "dwadpj wdpajdpo awjpodjopwa jdpo awjdpoj awpodj",
-// };
+import { discountedPrice } from "../../../app/constants";
+import { useAlert } from "react-alert";
+import { PuffLoader } from "react-spinners";
 
 const color = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -69,57 +43,46 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const product = useSelector(selectProductById);
   const [selectedColor, setSelectedColor] = useState(color[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-  // const items = useSelector(selectTotalItems);
 
   const dispatch = useDispatch();
   const params = useParams();
-  // const alert = useAlert();
-  // const status = useSelector(selectProductListStatus);
+
   const user = useSelector(selectLoggedInUser);
+  const items = useSelector(selectItems);
+  const product = useSelector(selectProductById);
+  const productsStatus = useSelector(selectProductsListStatus);
+  const alert = useAlert();
+
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
 
   const handleCart = (e) => {
     e.preventDefault();
-    let newItem = { ...product, quantity: 1, user: user.id }
-    delete newItem['id']
-    dispatch(addToCartAsync(newItem));
-    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
-    //   console.log({ items, product });
-    //   const newItem = {
-    //     product: product.id,
-    //     quantity: 1,
-    //   };
-    //   if (selectedColor) {
-    //     newItem.color = selectedColor;
-    //   }
-    //   if (selectedSize) {
-    //     newItem.size = selectedSize;
-    //   }
-    //   dispatch(addToCartAsync({ item: newItem, alert }));
-    // } else {
-    //   alert.error("Item Already added");
-    // }
+    if (items.findIndex((item) => item.productId === product.id) < 0) {
+      let newItem = {
+        ...product,
+        productId: product.id,
+        quantity: 1,
+        user: user.id,
+      };
+      delete newItem["id"];
+      dispatch(addToCartAsync(newItem));
+      alert.success("Item added to cart");
+    } else {
+      alert.show("Item alredy in cart!");
+    }
   };
 
   return (
     <div className="bg-white">
-      {/* {status === "loading" ? (
-        <Grid
-          height="80"
-          width="80"
-          color="rgb(79, 70, 229) "
-          ariaLabel="grid-loading"
-          radius="12.5"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
-      ) : null} */}
+      {productsStatus === "loading" ? (
+        <div className="w-full min-h-screen flex justify-center items-center">
+          <PuffLoader color="#006cff" size={80} />
+        </div>
+      ) : null}
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
@@ -208,10 +171,7 @@ export default function ProductDetails() {
                 ${product.price}
               </p>
               <p className="text-3xl tracking-tight text-gray-900">
-                $
-                {Math.round(
-                  product.price * (1 - product.discountPercentage / 100)
-                )}
+                ${discountedPrice(product)}
               </p>
 
               {/* Reviews */}

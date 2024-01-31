@@ -68,6 +68,7 @@ const UserProfile = () => {
       <div className="border-t border-gray-200 px-2 py-6 sm:px-6">
         <button
           onClick={() => {
+            reset();
             setShowAddAddressForm(true);
             setselectedEditIndex(-1);
           }}
@@ -78,10 +79,9 @@ const UserProfile = () => {
         </button>
         {showAddAddressForm ? (
           <form
-            className="bg-white px-5 py-12 mt-12"
+            className="bg-white px-5 py-12"
             noValidate
             onSubmit={handleSubmit((data) => {
-              console.log(data);
               handleAdd(data);
               reset();
             })}
@@ -89,7 +89,7 @@ const UserProfile = () => {
             <div className="space-y-12">
               <div className="border-b border-gray-900/10 pb-12">
                 <h2 className="text-2xl font-semibold leading-7 text-gray-900">
-                  Personal Information
+                  New Personal Information
                 </h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
                   Use a permanent address where you can receive mail.
@@ -256,9 +256,16 @@ const UserProfile = () => {
               <div className="mt-6 flex items-center justify-end gap-x-6">
                 <button
                   type="submit"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Add Address
+                </button>
+                <button
+                  onClick={() => setShowAddAddressForm(false)}
+                  type="button"
+                  className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                >
+                  Cancel
                 </button>
               </div>
             </div>
@@ -267,6 +274,7 @@ const UserProfile = () => {
 
         <p className="mt-0.5 text-xl  font-semibold mb-5">My Addresses:</p>
 
+        {/* EDIT FORM  */}
         {user.addresses.map((address, i) => (
           <div key={i}>
             {selectedEditIndex === i ? (
@@ -280,7 +288,7 @@ const UserProfile = () => {
                 <div className="space-y-12">
                   <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-2xl font-semibold leading-7 text-gray-900">
-                      Address Information
+                      Edit Address Information
                     </h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
                       Use a permanent address where you can receive order.
@@ -431,9 +439,12 @@ const UserProfile = () => {
 
                   <div className="mt-6 flex items-center justify-end gap-x-6">
                     <button
-                      onClick={() => setselectedEditIndex(-1)}
+                      onClick={() => {
+                        setselectedEditIndex(-1);
+                        reset();
+                      }}
                       type="button"
-                      className="text-sm font-semibold leading-6 text-gray-900"
+                      className="bg-red-500 rounded-md  hover:bg-red-600 px-3 py-2 text-white shadow-sm text-sm font-semibold leading-6 "
                     >
                       Cancel
                     </button>
@@ -453,35 +464,38 @@ const UserProfile = () => {
               <div className="flex  px-2 my-2 justify-between gap-x-6 py-3 border-solid border-2 border-gray-300 rounded-md">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm  font-semibold leading-6 text-gray-900">
-                    FullName: {address.fullName}
+                    FullName: {address?.fullName}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    <strong>Phone:</strong> {address.phone}
+                    <strong>Phone:</strong> {address?.phone}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    <strong>address:</strong> {address.street}
+                    <strong>address:</strong> {address?.street}
                   </p>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    <strong>email:</strong> {address.email}
+                    <strong>email:</strong> {address?.email}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    <strong>city:</strong> {address.city}{" "}
-                    <strong>pincode:</strong> {address.pincode}
+                    <strong>city:</strong> {address?.city}{" "}
+                    <strong>pincode:</strong> {address?.pincode}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    <strong>state:</strong> {address.state}
+                    <strong>state:</strong> {address?.state}
                   </p>
                   <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                    {address.pinCode}
+                    {address?.pinCode}
                   </p>
                 </div>
                 <div className="flex flex-col justify-center">
                   <button
                     type="button"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
-                    onClick={() => handleEditForm(i)}
+                    onClick={() => {
+                      handleEditForm(i);
+                      setShowAddAddressForm(false);
+                    }}
                   >
                     Edit
                   </button>

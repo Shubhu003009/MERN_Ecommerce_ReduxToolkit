@@ -8,8 +8,6 @@ export function fetchLoggedInUser(id) {
   return instance.get(`/users/${id}`);
 }
 
-export async function updateUser(update) {
-  return instance.patch(`/users/${update.id}`, update, {
-    headers: { "Content-Type": "application/json" },
-  });
+export function updateUser(update) {
+  return instance.patch(`/users/${update.id}`, update);
 }

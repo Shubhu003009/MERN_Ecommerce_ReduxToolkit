@@ -30,8 +30,9 @@ export const fetchLoggedInUserAsync = createAsyncThunk(
 
 export const updateUserAsync = createAsyncThunk(
   "user/updateUser",
-  async (id) => {
-    const { data } = await updateUser(id);
+  async (update) => {
+    const { data } = await updateUser(update);
+    console.log(update);
     return data;
   }
 );

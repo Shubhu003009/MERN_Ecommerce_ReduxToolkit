@@ -1,4 +1,5 @@
 import AdminOrders from "../features/admin/components/AdminOrders";
+import Footer from "../features/common/Footer";
 import Navbar from "../features/navbar/Navbar";
 
 export default function AdminOrdersPage() {
@@ -6,6 +7,7 @@ export default function AdminOrdersPage() {
     <>
       <Navbar />
       <AdminOrders />
+      <Footer />
     </>
   );
 }
